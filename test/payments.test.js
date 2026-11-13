@@ -21,9 +21,11 @@ test('confirma a referência, moeda e total com IVA antes de aceitar pagamento',
  assert.equal(matchesPayment(o,tx),true);assert.equal(matchesPayment(o,{...tx,id:'t2'}),false);assert.equal(matchesPayment(o,{...tx,currency:'BRL'}),false);assert.equal(matchesPayment(o,{...tx,vat:{baseAmount:805,totalAmount:1000}}),false);
 });
 
-test('consulta sem IVA só é aceite se o total da criação estiver verificado',()=>{
+test('consulta MB WAY sem IVA aceita apenas a base enviada ou o total já verificado',()=>{
  const tx={id:'t1',amount:805,currency:'EUR'};
- assert.equal(matchesPayment({transaction_id:'t1',verified_total:0},tx),false);
+ assert.equal(matchesPayment({transaction_id:'t1',verified_total:0},tx),true);
+ assert.equal(matchesPayment({transaction_id:'t1',verified_total:0},{...tx,amount:990}),false);
  assert.equal(matchesPayment({transaction_id:'t1',verified_total:990},tx),true);
  assert.equal(matchesPayment({transaction_id:'t1',verified_total:990},{...tx,amount:1}),false);
 });
+

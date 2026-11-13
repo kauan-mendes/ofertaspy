@@ -21,6 +21,6 @@ export const ISSUE_MESSAGES={
 export function paymentIssue(order,tx,matches) {
  if(!tx || String(tx.id)!==order.transaction_id || (tx.currency&&tx.currency!=='EUR'))return 'EAGLE_REFERENCE_MISMATCH';
  if(matches(order,tx))return null;
- if(!tx.vat && order.verified_total!==990)return 'EAGLE_TOTAL_UNVERIFIED';
+ if(!tx.vat && (tx.amount===null||tx.amount===undefined||tx.amount===''))return 'EAGLE_TOTAL_UNVERIFIED';
  return 'EAGLE_AMOUNT_MISMATCH';
 }

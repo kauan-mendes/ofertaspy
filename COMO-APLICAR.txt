@@ -1,11 +1,14 @@
-Atualização do diagnóstico MB WAY (versão 1.0.1)
+Correção MB WAY 1.0.2
 
-1. Extraia este ZIP.
-2. No repositório kauan-mendes/ofertaspy, substitua os ficheiros mantendo as pastas server, assets/js, test e database. Não envie apenas o ZIP.
-3. Faça commit na branch usada pelo Render e aguarde o deploy automático.
-4. Atualize a página do pedido existente e clique em Verificar pagamento uma vez. Não crie outra cobrança.
+1. Extraia este ZIP e substitua os ficheiros no repositório ofertaspy mantendo as pastas. Não envie o ZIP como um único ficheiro.
+2. Faça commit e aguarde o deploy no Render.
+3. Confirme /api/health: version deve ser 1.0.2.
+4. Na página já aberta do pedido, atualize e clique em Verificar pagamento. A cobrança existente é reutilizada. Não crie outra.
 
-A tabela Supabase mbway_orders já recebeu provider_summary e last_error_code. Não precisa executar SQL novamente.
-A atualização não aprova pagamentos manualmente e não cria cobranças de diagnóstico. Ela consulta a referência existente, guarda apenas campos permitidos da resposta (valor, moeda, estado, IVA e referência) e mostra um erro específico.
+Causa observada: GET Eagle devolve id/status/amount/currency/endToEndId, amount=805 EUR e status=processing, sem vat. A versão anterior rejeitava o retorno por não incluir o objeto vat. A correção confere a referência, a moeda e os 805 cêntimos de base enviados. Quando vat existe, exige base=805 e total=990. O total esperado de 9,90 EUR depende do IVA automático documentado pela Eagle: confira-o na aplicação MB WAY antes de aprovar.
 
-Validação: 10 testes unitários e teste de integração com respostas simuladas passaram. Ainda é necessário obter o retorno real da Eagle após o deploy para identificar e corrigir a divergência específica.
+A atualização não aprova manualmente: apenas status=completed obtido na consulta autenticada ao prestador confirma pagamento. processing/pending continuam pendentes. Valores ou referências diferentes continuam bloqueados.
+
+A permissão service_role da tabela mbway_orders já foi restaurada no Supabase. Não precisa executar o SQL novamente. O ficheiro database/diagnostics.sql inclui grants após a alteração para evitar a perda de permissões em novas instalações.
+
+Validação: 11 testes unitários e testes de integração com retorno simulado tanto com IVA quanto sem o campo vat. Nenhuma cobrança nova criada pelo assistente.

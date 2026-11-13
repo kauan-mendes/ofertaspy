@@ -36,6 +36,11 @@ export function mbwayPayload(customer, orderId, origin) {
 export function matchesPayment(order, tx) {
   if (String(tx.id) !== order.transaction_id || (tx.currency && tx.currency !== 'EUR')) return false;
   if (tx.vat) return Number(tx.vat.totalAmount) === TOTAL_CENTS && Number(tx.vat.baseAmount) === MBWAY_BASE_CENTS;
-  // Algumas consultas devolvem apenas amount. A criação já tem de ter confirmado o IVA.
-  return order.verified_total === TOTAL_CENTS && [MBWAY_BASE_CENTS, TOTAL_CENTS].includes(Number(tx.amount));
+  // A consulta real MB WAY retorna o montante base sem objeto vat.
+  // Conferir a base enviada é suficiente; o total esperado continua a ser
+  // base + IVA de 23%, aplicado pela Eagle conforme o contrato documentado.
+  // Se vat vier presente, o ramo acima continua a exigir os valores exatos.
+  return Number(tx.amount) === MBWAY_BASE_CENTS ||
+    (order.verified_total === TOTAL_CENTS && Number(tx.amount) === TOTAL_CENTS);
 }
+

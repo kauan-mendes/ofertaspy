@@ -46,7 +46,7 @@ async function reconcile(o) {
 const app = http.createServer(async(req,res)=>{
  try {
   const url=new URL(req.url,'http://localhost');
-  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase',version:'1.0.1'});
+  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase',version:'1.0.2'});
   if(url.pathname==='/api/config' && req.method==='GET') return send(res,200,{enabled,amount:990,currency:'EUR',mbwayBase:805,mbwayVat:185});
   if(url.pathname==='/api/eagle/webhook' && req.method==='POST') {
    if(!enabled) return send(res,503,{error:'Pagamentos desativados.'});
