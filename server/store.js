@@ -17,6 +17,9 @@ export function createStore(env=process.env, transport=fetch) {
   attach:(id,tx)=>patch(id,{transaction_id:tx},'&transaction_id=is.null'),
   verify:async id=>{await patch(id,{verified_total:990});await patch(id,{status:'pending'},'&status=eq.creating');},
   review:id=>patch(id,{status:'review'},'&status=eq.creating'),
+  diagnose:(id,summary,code=null)=>patch(id,{provider_summary:summary,last_error_code:code,last_check:Date.now()}),
+  issue:(id,code)=>patch(id,{last_error_code:code,last_check:Date.now()}),
   status:(id,status)=>request('rpc/mbway_record_status',{method:'POST',body:{p_id:id,p_status:status}})
  };
 }
+

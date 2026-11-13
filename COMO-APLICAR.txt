@@ -1,0 +1,11 @@
+Atualização do diagnóstico MB WAY (versão 1.0.1)
+
+1. Extraia este ZIP.
+2. No repositório kauan-mendes/ofertaspy, substitua os ficheiros mantendo as pastas server, assets/js, test e database. Não envie apenas o ZIP.
+3. Faça commit na branch usada pelo Render e aguarde o deploy automático.
+4. Atualize a página do pedido existente e clique em Verificar pagamento uma vez. Não crie outra cobrança.
+
+A tabela Supabase mbway_orders já recebeu provider_summary e last_error_code. Não precisa executar SQL novamente.
+A atualização não aprova pagamentos manualmente e não cria cobranças de diagnóstico. Ela consulta a referência existente, guarda apenas campos permitidos da resposta (valor, moeda, estado, IVA e referência) e mostra um erro específico.
+
+Validação: 10 testes unitários e teste de integração com respostas simuladas passaram. Ainda é necessário obter o retorno real da Eagle após o deploy para identificar e corrigir a divergência específica.

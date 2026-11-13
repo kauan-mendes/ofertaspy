@@ -8,7 +8,7 @@
   paid:['✓','Pagamento confirmado','A Eagle confirmou o pagamento real de 9,90 €. A validação académica está concluída. Os dados do relatório continuam a ser uma simulação.'],
   pending:['…','Confirma na aplicação MB WAY','Abre a aplicação MB WAY e verifica o pedido de 9,90 €. O estado será atualizado após confirmação pela Eagle.'],
   creating:['…','Pedido em processamento','Aguarda pela confirmação do servidor. Não cries outro pedido.'],
-  review:['!','Verificação necessária','A resposta de criação foi inconclusiva. Confirma o pedido no painel Eagle e na aplicação MB WAY antes de qualquer nova tentativa.'],
+  review:['!','Pedido criado — confirmação pendente','A referência existente foi preservada. Estamos a verificar a resposta da Eagle; não cries outro pedido.'],
   rejected:['×','Pagamento recusado','O pagamento foi recusado pela Eagle. Consulta o painel antes de repetir o teste.'],
   refunded:['↩','Pagamento reembolsado','A Eagle confirmou que o pagamento foi reembolsado.'],
   chargeback:['!','Pagamento contestado','A Eagle comunicou uma contestação deste pagamento.'],
@@ -29,11 +29,11 @@
   try {
    const res=await fetch('/api/orders/'+encodeURIComponent(order.id),{headers:{Authorization:'Bearer '+order.token},cache:'no-store'});
    const data=await res.json();if(!res.ok)throw new Error(data.error||'Não foi possível confirmar o estado.');
-   order=data;save();render();$('message').textContent='';
+   order=data;save();render();$('message').textContent=order.message||'';
   } catch(e) { $('message').textContent=e.message+' Não aproves nem cries outro pedido sem confirmar o estado.'; }
   finally {busy=false;$('checkButton').disabled=false;}
   clearTimeout(timer);
-  if(!terminal.has(order.status))timer=setTimeout(check,12000);
+  if(!terminal.has(order.status)&&!order.issue)timer=setTimeout(check,12000);
  }
  $('checkButton').addEventListener('click',check);
  $('paymentForm').addEventListener('submit',async e=>{
@@ -48,7 +48,7 @@
    if(!res.ok)throw new Error(data.error||'Não foi possível criar o pedido.');
    busy=false;await check();
   } catch(e) { $('message').textContent=e.message+' Mantém esta página aberta e evita criar pedidos repetidos.'; }
-  finally {busy=false;$('payButton').disabled=false;$('payButton').textContent='Pagar 9,90 € com MB WAY';if(order&&!terminal.has(order.status)){clearTimeout(timer);timer=setTimeout(check,12000);}}
+  finally {busy=false;$('payButton').disabled=false;$('payButton').textContent='Pagar 9,90 € com MB WAY';if(order&&!terminal.has(order.status)&&!order.issue){clearTimeout(timer);timer=setTimeout(check,12000);}}
  });
  (async()=>{
   try {
@@ -61,3 +61,4 @@
   } catch(e) {$('message').textContent=e.message;}
  })();
 })();
+

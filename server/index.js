@@ -5,6 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { randomUUID, randomBytes } from 'node:crypto';
 import { createStore } from './store.js';
 import { verifySignature, validateCustomer, mbwayPayload, matchesPayment, TOTAL_CENTS } from './payments.js';
+import { summarizeTransaction, paymentIssue, ISSUE_MESSAGES } from './provider-response.js';
 const root = fileURLToPath(new URL('../', import.meta.url));
 const origin = (process.env.PUBLIC_APP_URL || '').replace(/\/$/, '');
 const enabled = process.env.PAYMENTS_ENABLED === 'true';
@@ -13,7 +14,7 @@ if (enabled && (!/^https:\/\/[^/?#]+$/.test(origin) || ['EAGLE_CLIENT_ID','EAGLE
 const db = createStore();
 const get = id => db.get(id);
 const byTx = tx => db.byTx(tx);
-const safeOrder = o => ({ id: o.id, token: o.token, method: o.method, status: o.status, amount: TOTAL_CENTS, currency: 'EUR' });
+const safeOrder = o => ({ id: o.id, token: o.token, method: o.method, status: o.status, amount: TOTAL_CENTS, currency: 'EUR', issue: o.last_error_code || null, message: ISSUE_MESSAGES[o.last_error_code] || null });
 function send(res, code, obj) {
  res.writeHead(code, {'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}); res.end(JSON.stringify(obj));
 }
@@ -24,21 +25,28 @@ async function rawBody(req) {
 }
 async function eagle(path, { method='GET', body, key='public' }={}) {
  const response=await fetch('https://api.eaglepagamentos.com.br'+path, {method, redirect:'error', signal:AbortSignal.timeout(25000), headers:{'Content-Type':'application/json','X-Client-Id':process.env.EAGLE_CLIENT_ID,[key==='secret'?'X-Secret-Key':'X-Public-Key']:process.env[key==='secret'?'EAGLE_SECRET_KEY':'EAGLE_PUBLIC_KEY']}, ...(body?{body:JSON.stringify(body)}:{})});
- if(!response.ok) throw new Error('A Eagle não concluiu o pedido. Confirma as credenciais, a moeda EUR e os métodos habilitados no painel.');
+ if(!response.ok) throw Object.assign(new Error(ISSUE_MESSAGES.EAGLE_REQUEST_FAILED),{code:'EAGLE_REQUEST_FAILED',providerStatus:response.status});
  return response.json();
 }
 async function reconcile(o) {
  if(!o.transaction_id) return o;
- const tx=await eagle('/api/v1/public/payment/transaction/'+encodeURIComponent(o.transaction_id));
- if(!matchesPayment(o,tx)) throw new Error('A referência ou o valor do pagamento não corresponde ao pedido.');
+ let tx;
+ try { tx=await eagle('/api/v1/public/payment/transaction/'+encodeURIComponent(o.transaction_id)); }
+ catch(e) {
+  await db.diagnose(o.id,{stage:'lookup',httpStatus:e.providerStatus||null},'EAGLE_REQUEST_FAILED');
+  return get(o.id);
+ }
+ const issue=paymentIssue(o,tx,matchesPayment);
+ await db.diagnose(o.id,{stage:'lookup',...summarizeTransaction(tx)},issue);
+ if(issue) return get(o.id);
+ if(o.verified_total!==TOTAL_CENTS) await db.verify(o.id);
  const status=tx.status==='completed'?'paid':({rejected:'rejected',refunded:'refunded',chargeback:'chargeback',expired:'expired',cancelled:'cancelled'}[tx.status]||'pending');
- // A leitura remota é a autoridade; mensagens do navegador nunca confirmam pagamento.
  return db.status(o.id,status);
 }
 const app = http.createServer(async(req,res)=>{
  try {
   const url=new URL(req.url,'http://localhost');
-  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase'});
+  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase',version:'1.0.1'});
   if(url.pathname==='/api/config' && req.method==='GET') return send(res,200,{enabled,amount:990,currency:'EUR',mbwayBase:805,mbwayVat:185});
   if(url.pathname==='/api/eagle/webhook' && req.method==='POST') {
    if(!enabled) return send(res,503,{error:'Pagamentos desativados.'});
@@ -52,7 +60,8 @@ const app = http.createServer(async(req,res)=>{
     if(o && !o.transaction_id) { await db.attach(o.id,event.transactionId); o=await get(o.id); }
    }
    if(!o || o.transaction_id!==event.transactionId) return send(res,200,{received:true});
-   await reconcile(o); // Falha: 503 para permitir nova tentativa do remetente.
+   const checked=await reconcile(o);
+   if(checked.last_error_code) return send(res,503,{error:ISSUE_MESSAGES[checked.last_error_code]});
    return send(res,200,{received:true});
   }
   if(url.pathname==='/api/orders' && req.method==='POST') {
@@ -70,13 +79,16 @@ const app = http.createServer(async(req,res)=>{
      const tx=await eagle('/api/v1/public/payment/transaction',{method:'POST',body:mbwayPayload(customer,id,origin)});
      if(typeof tx.id!=='string'||!tx.id) throw new Error('Resposta da Eagle sem referência da transação.');
      await db.attach(id,tx.id);
-     if(!matchesPayment(await get(id),tx)) throw new Error('A Eagle devolveu um total diferente de 9,90 €. Não aproves o pedido; consulta o painel.');
+     const issue=paymentIssue(await get(id),tx,matchesPayment);
+     await db.diagnose(id,{stage:'create',...summarizeTransaction(tx)},issue);
+     if(issue) throw Object.assign(new Error(ISSUE_MESSAGES[issue]),{code:issue});
      await db.verify(id);
 
     return send(res,201,safeOrder(await get(id)));
    } catch(e) {
     // Não repetir POST com resultado desconhecido: pode já existir uma cobrança no prestador.
     await db.review(id);
+    await db.issue(id,e.code||'STORAGE_FAILED');
     return send(res,502,{...safeOrder(await get(id)),error:e.message+' Não cries outro pedido antes de confirmar o estado no painel Eagle.'});
    }
   }
@@ -105,3 +117,4 @@ const app = http.createServer(async(req,res)=>{
  }
 });
 app.listen(port,'0.0.0.0',()=>console.log('Aplicação disponível na porta '+port+'; pagamentos '+(enabled?'REAIS ativados':'desativados')));
+
