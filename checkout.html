@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+ <title>Validação académica · MB WAY</title>
+ <link rel="stylesheet" href="/assets/css/checkout.css">
+ <script src="/assets/js/checkout.js" defer></script>
+</head>
+<body>
+ <main>
+  <a class="back" href="/">← Voltar à apresentação</a>
+  <div class="badge">PROJETO ACADÉMICO · COBRANÇA REAL</div>
+  <h1>Validar pagamento<br><span>com MB WAY</span></h1>
+  <p class="intro">Relatório e métricas simulados para apresentação. Este pagamento não compra dados reais de visitas, capturas de ecrã ou mensagens privadas do Instagram.</p>
+  <div class="price"><div><strong>Total a pagar</strong><small>8,05 € + 1,85 € de IVA (23%)</small></div><b>9,90 €</b></div>
+  <form id="paymentForm">
+   <label for="name">Nome completo</label><input id="name" name="name" autocomplete="name" maxlength="120" required>
+   <label for="email">Endereço de e-mail</label><input id="email" name="email" type="email" autocomplete="email" maxlength="254" required>
+   <label for="phone">Telemóvel associado ao MB WAY</label><div class="phone"><span>+351</span><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="9XX XXX XXX" required></div>
+   <label for="nif">NIF do pagador</label><input id="nif" name="nif" inputmode="numeric" maxlength="9" pattern="[0-9]{9}" placeholder="9 algarismos" required>
+   <label class="consent"><input id="consent" type="checkbox" required><span>Compreendo que esta validação cobra <strong>9,90 € reais</strong> e que os resultados da apresentação são simulados.</span></label>
+   <button id="payButton" type="submit" disabled>Pagar 9,90 € com MB WAY</button>
+  </form>
+  <section id="receipt" hidden aria-live="polite">
+   <div id="statusIcon" class="status-icon">…</div><h2 id="statusTitle">A verificar o pedido</h2><p id="statusDescription"></p>
+   <p class="reference">Referência: <span id="orderId"></span></p>
+   <button id="checkButton" type="button">Verificar pagamento</button>
+  </section>
+  <p id="message" role="status" aria-live="polite"></p>
+  <p class="footer">Pagamento processado pela EaglePay. Confirma o total na aplicação MB WAY antes de aprovar. Não há reembolso automático neste projeto.</p>
+ </main>
+</body>
+</html>

@@ -1,0 +1,2287 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghost Watcher</title>
+
+    <link rel="stylesheet" href="./assets/css/fonts.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+
+    <!-- Utmify -->
+    <script
+      src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+      data-utmify-prevent-xcod-sck
+      data-utmify-prevent-subids
+      async
+      defer
+    ></script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      fbq("init", "1101089531983920");
+      fbq("track", "PageView");
+    </script>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=1101089531983920&ev=PageView&noscript=1" />
+    </noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+  <body>
+    <div style="padding:10px 16px;text-align:center;background:#292116;color:#ffe4ad;font:13px/1.5 sans-serif;position:sticky;top:0;z-index:20">
+      Projeto académico · Relatórios e métricas simulados. O pagamento MB WAY de 9,90 € é real e destina-se apenas à validação.
+    </div>
+    <!-- NOTIFICATION -->
+    <div class="notif" id="notif">
+      <div class="nav" id="notifAv"></div>
+      <div style="flex: 1; font-size: 0.78rem; line-height: 1.4; color: var(--grey)">
+        <strong id="notifUser" style="color: var(--white)">@utilizador</strong> está a visitar o teu perfil neste momento.
+      </div>
+      <div class="ndot"></div>
+    </div>
+
+    <!-- SENSITIVE POPUP -->
+    <div class="pop-overlay" id="popupOverlay">
+      <div class="pop-box">
+        <div
+          style="
+            width: 40px;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--border);
+            margin: 0 auto 1.5rem;
+          "></div>
+        <div style="text-align: center">
+          <div style="font-size: 2rem; margin-bottom: 1rem">&#x1F6E1;&#xFE0F;</div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.75rem">
+            Conteúdo sensível a seguir
+          </h2>
+          <p
+            style="
+              font-size: 0.85rem;
+              color: rgba(255, 255, 255, 0.6);
+              line-height: 1.7;
+              margin-bottom: 1rem;
+            ">
+            O teu relatório pode conter
+            <strong style="color: var(--white)">resultados surpreendentes ou inesperados.</strong>
+            <br />
+            <br />A pessoa que esperas ver pode aparecer — ou alguém que nunca imaginaste pode estar a observar-te todos os dias.
+          </p>
+          <div
+            style="
+              background: rgba(255, 179, 64, 0.07);
+              border: 1px solid rgba(255, 179, 64, 0.2);
+              border-radius: 10px;
+              padding: 0.85rem 1rem;
+              font-size: 0.82rem;
+              color: #ffb340;
+              line-height: 1.6;
+              margin-bottom: 1.5rem;
+            ">
+            Há quem prefira não saber. Depois de veres os nomes, não os consegues esquecer.
+          </div>
+          <button class="btn btn-pink" onclick="closeSensitive()">
+            Compreendo, continuar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ S1 LANDING ═══════ -->
+    <div class="screen active" id="s1">
+      <div class="inner fi">
+        <!-- LOGO + LIVE BADGE -->
+        <div style="text-align: center; margin-bottom: 1.25rem; padding-top: 0.25rem">
+          <img
+            id="logoImg"
+            style="
+              width: 110px;
+              max-width: 50%;
+              filter: brightness(0) invert(1);
+              margin-bottom: 0.75rem;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+            "
+            alt="Ghost Watcher" />
+          <div
+            style="
+              display: inline-flex;
+              align-items: center;
+              gap: 0.4rem;
+              background: rgba(0, 201, 167, 0.08);
+              border: 1px solid rgba(0, 201, 167, 0.2);
+              border-radius: 20px;
+              padding: 0.3rem 0.85rem;
+              font-size: 0.7rem;
+              font-weight: 600;
+              color: var(--teal);
+            ">
+            <div
+              style="
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--teal);
+                animation: blink 1.4s infinite;
+              "></div>
+            2 676 utilizadores online
+          </div>
+        </div>
+
+        <!-- MINI TESTIMONIAL -->
+        <div
+          style="
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+          ">
+          <div class="tav" style="width: 46px; height: 46px; flex-shrink: 0">
+            <img id="sarahTop" alt="S" />
+          </div>
+          <div>
+            <p
+              style="
+                font-size: 0.82rem;
+                color: rgba(255, 255, 255, 0.75);
+                line-height: 1.55;
+                margin-bottom: 0.3rem;
+              ">
+              «Descobri que o meu ex ainda via o meu perfil todos os dias. Dizia a toda a gente que já me tinha esquecido.»
+            </p>
+            <span style="font-size: 0.72rem; color: var(--grey)">Sarah, 23</span>
+          </div>
+        </div>
+
+        <!-- HEADLINE -->
+        <h1
+          style="
+            font-size: clamp(2.2rem, 11vw, 3rem);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 1.5rem;
+          ">
+          Alguém visita o teu perfil<br />
+          <span style="color: var(--pink)">todos os dias.</span>
+          <br />
+          <span style="color: var(--teal); font-size: clamp(1.5rem, 8vw, 2.1rem)"
+            >Queres saber quem é?</span
+          >
+        </h1>
+
+        <!-- FEATURE GRID -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.6rem;
+            margin-bottom: 1.75rem;
+          ">
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 12px;
+              padding: 0.9rem;
+              display: flex;
+              gap: 0.65rem;
+              align-items: flex-start;
+            ">
+            <span style="font-size: 1.2rem">&#x1F441;&#xFE0F;</span>
+
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700">Visitantes do perfil</div>
+              <div style="font-size: 0.7rem; color: var(--grey)">
+                Vê quem visita o teu perfil
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 12px;
+              padding: 0.9rem;
+              display: flex;
+              gap: 0.65rem;
+              align-items: flex-start;
+            ">
+            <span style="font-size: 1.2rem">&#x1F4F8;</span>
+
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700">Capturas de ecrã das histórias</div>
+              <div style="font-size: 0.7rem; color: var(--grey)">
+                Descobre quem guarda as tuas histórias
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 12px;
+              padding: 0.9rem;
+              display: flex;
+              gap: 0.65rem;
+              align-items: flex-start;
+            ">
+            <span style="font-size: 1.2rem">&#x1F4AC;</span>
+
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700">Menções em mensagens privadas</div>
+              <div style="font-size: 0.7rem; color: var(--grey)">
+                Quem fala de ti em mensagens privadas
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 12px;
+              padding: 0.9rem;
+              display: flex;
+              gap: 0.65rem;
+              align-items: flex-start;
+            ">
+            <span style="font-size: 1.2rem">&#x1F575;&#xFE0F;</span>
+
+            <div>
+              <div style="font-size: 0.82rem; font-weight: 700">Admiradores secretos</div>
+              <div style="font-size: 0.7rem; color: var(--grey)">
+                Quem volta sempre
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INPUT -->
+        <label
+          style="
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--grey);
+            margin-bottom: 0.45rem;
+            display: block;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+          "
+          >O teu nome de utilizador do Instagram
+        </label>
+        <div class="inp-wrap">
+          <span class="at">@</span>
+          <input
+            type="text"
+            id="usernameInput"
+            placeholder="o_teu_utilizador"
+            autocomplete="off"
+            autocapitalize="off"
+            onkeydown="if (event.key === 'Enter') startFlow();" />
+        </div>
+        <button class="btn btn-pink" style="margin-bottom: 0.75rem" onclick="startFlow()">
+          &#x1F50D; Analisar o meu perfil
+        </button>
+        <p
+          style="
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--grey);
+            margin-bottom: 0.35rem;
+          ">
+          &#x1F512; Não é necessária palavra-passe. 100% seguro e privado.
+        </p>
+        <p style="text-align: center; font-size: 0.72rem">
+          <span style="color: var(--pink); font-weight: 700">2676+</span>
+          <span style="color: var(--grey)">utilizadores analisados hoje</span>
+        </p>
+
+        <!-- HOW IT WORKS -->
+        <div
+          style="
+            margin-top: 2rem;
+            border-top: 1px solid var(--border);
+            padding-top: 1.75rem;
+          ">
+          <h2 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem">
+            Como funciona
+          </h2>
+          <div class="card" style="margin-bottom: 1.5rem">
+            <div class="hstep">
+              <div class="hnum">01</div>
+
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 700; margin-bottom: 0.2rem">
+                  Introduz o teu nome de utilizador
+                </div>
+                <div style="font-size: 0.78rem; color: var(--grey); line-height: 1.5">
+                  Só precisamos do teu nome de utilizador público do Instagram. Não é necessária palavra-passe.
+                </div>
+              </div>
+            </div>
+            <div class="hstep">
+              <div class="hnum">02</div>
+
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 700; margin-bottom: 0.2rem">
+                  Analisamos os dados
+                </div>
+                <div style="font-size: 0.78rem; color: var(--grey); line-height: 1.5">
+                  O nosso sistema cruza bases de dados divulgadas e padrões de interação.
+                </div>
+              </div>
+            </div>
+            <div class="hstep">
+              <div class="hnum">03</div>
+
+              <div>
+                <div style="font-size: 0.88rem; font-weight: 700; margin-bottom: 0.2rem">
+                  Consulta o teu relatório
+                </div>
+                <div style="font-size: 0.78rem; color: var(--grey); line-height: 1.5">
+                  Obtém nomes, números de visitas, capturas de ecrã e menções em mensagens privadas em 60 segundos.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 14px;
+              padding: 1.25rem;
+              margin-bottom: 1.5rem;
+              text-align: center;
+            ">
+            <div
+              style="
+                font-size: 2rem;
+                font-weight: 900;
+                color: var(--pink);
+                margin-bottom: 0.25rem;
+              ">
+              847 000+
+            </div>
+            <div style="font-size: 0.78rem; color: var(--grey); margin-bottom: 0.5rem">
+              perfis analisados pelo nosso sistema
+            </div>
+            <div style="font-size: 0.9rem; color: #fbbf24; margin-bottom: 0.2rem">
+              &#x2605;&#x2605;&#x2605;&#x2605;&#x2605;
+            </div>
+            <div style="font-size: 0.72rem; color: var(--grey)">
+              4,8 em 5 — com base em milhares de avaliações
+            </div>
+          </div>
+          <div class="card card-pink">
+            <div class="testi">
+              <div class="thd">
+                <div class="tav"><img id="sarahTesti" alt="S" /></div>
+
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 700">Sarah, 23</div>
+                  <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                </div>
+              </div>
+              <p>
+                Descobri que o meu ex — que dizia a toda a gente que já me tinha esquecido — visitava o meu perfil todos os dias. 23 vezes num mês.
+              </p>
+            </div>
+            <div class="testi">
+              <div class="thd">
+                <div class="tav">M</div>
+
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 700">Maria, 27</div>
+                  <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                </div>
+              </div>
+              <p>
+                Havia um rapaz de quem eu gostava, mas não tinha coragem de lhe enviar mensagem. Afinal, visitou o meu perfil 11 vezes na semana passada. Agora estamos a falar.
+              </p>
+            </div>
+            <div class="testi">
+              <div class="thd">
+                <div class="tav">J</div>
+
+                <div>
+                  <div style="font-size: 0.85rem; font-weight: 700">Jake, 25</div>
+                  <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+                </div>
+              </div>
+              <p>
+                A minha namorada dizia que «nunca usa o Instagram». O relatório dela mostrou 47 visitas ao perfil de uma rapariga em 30 dias.
+              </p>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-pink" style="margin-top: 1.5rem" onclick="startFlow()">
+          &#x1F50D; Analisar o meu perfil
+        </button>
+        <p
+          style="
+            text-align: center;
+            font-size: 0.68rem;
+            color: var(--grey2);
+            margin-top: 0.6rem;
+            padding-bottom: 1rem;
+          ">
+          Encriptação SSL &middot; Em conformidade com o RGPD &middot; Sem palavra-passe
+        </p>
+      </div>
+    </div>
+
+    <!-- ═══════ S2 ANALYZING ═══════ -->
+    <div class="screen" id="s2">
+      <div class="inner fi" style="text-align: center; padding-top: 3rem">
+        <div class="spin-d" style="margin: 0 auto 1.5rem">
+          <div class="ring r1"></div>
+          <div class="ring r2"></div>
+          <div class="ring r3"></div>
+        </div>
+        <h2
+          id="analyzeTitle"
+          class="BB"
+          style="font-size: clamp(1.8rem, 9vw, 2.4rem); margin-bottom: 0.4rem">
+          A analisar...
+        </h2>
+        <p style="font-size: 0.85rem; color: var(--grey); margin-bottom: 1.75rem">
+          Estamos a verificar o teu perfil. Aguarda alguns segundos.
+        </p>
+        <div class="card" style="text-align: left">
+          <div class="sstatus" id="scanStatus">A cruzar dados de perfis...</div>
+          <div class="srow" id="sr1">
+            <span class="sl">Nome de utilizador</span><span class="sv" id="sr1v">—</span>
+            <div class="sspin" id="sr1i"></div>
+          </div>
+          <div class="srow" id="sr2">
+            <span class="sl">Tipo de conta</span><span class="sv" id="sr2v">—</span>
+            <div class="sspin" id="sr2i"></div>
+          </div>
+          <div class="srow" id="sr3">
+            <span class="sl">Seguidores</span><span class="sv" id="sr3v">—</span>
+            <div class="sspin" id="sr3i"></div>
+          </div>
+          <div class="srow" id="sr4">
+            <span class="sl">País</span><span class="sv" id="sr4v">—</span>
+            <div class="sspin" id="sr4i"></div>
+          </div>
+          <div class="srow" id="sr5">
+            <span class="sl">Estado do perfil</span><span class="sv" id="sr5v">—</span>
+            <div class="sspin" id="sr5i"></div>
+          </div>
+        </div>
+        <p style="font-size: 0.73rem; color: var(--grey2); margin-top: 1rem">
+          A analisar: visitantes frequentes, capturas de ecrã das histórias, menções em mensagens privadas...
+        </p>
+      </div>
+    </div>
+
+    <!-- ═══════ S3 CONFIRM ═══════ -->
+    <div class="screen" id="s3">
+      <div class="inner fi" style="text-align: center; padding-top: 3rem">
+        <div class="avring" style="width: 110px; height: 110px; margin: 0 auto 1.25rem">
+          <div class="avborder"></div>
+          <div class="avinner">
+            <img id="confirmPic" src="" alt="" style="display: none" />
+            <div class="avinit" id="confirmInit">?</div>
+          </div>
+        </div>
+        <div
+          style="
+            display: inline-block;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.85rem;
+            color: var(--grey);
+            margin-bottom: 0.85rem;
+          ">
+          @<span id="confirmUser">—</span>
+        </div>
+        <h2
+          class="BB"
+          style="font-size: clamp(1.8rem, 9vw, 2.4rem); margin-bottom: 0.25rem"
+          id="confirmName">
+          Olá!
+        </h2>
+        <p
+          style="
+            font-size: 0.82rem;
+            color: var(--grey);
+            margin-bottom: 0.75rem;
+            font-style: italic;
+            padding: 0 1rem;
+            line-height: 1.5;
+            max-height: 3rem;
+            overflow: hidden;
+          "
+          id="confirmBio"></p>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            gap: 1.75rem;
+            margin-bottom: 1.75rem;
+          ">
+          <div style="text-align: center">
+            <div class="BB" style="font-size: 1.4rem" id="cPosts">—</div>
+            <div style="font-size: 0.72rem; color: var(--grey)">publicações</div>
+          </div>
+          <div style="text-align: center">
+            <div class="BB" style="font-size: 1.4rem" id="cFollowers">—</div>
+            <div style="font-size: 0.72rem; color: var(--grey)">seguidores</div>
+          </div>
+          <div style="text-align: center">
+            <div class="BB" style="font-size: 1.4rem" id="cFollowing">—</div>
+            <div style="font-size: 0.72rem; color: var(--grey)">a seguir</div>
+          </div>
+        </div>
+        <p style="font-size: 0.9rem; color: var(--grey); margin-bottom: 1.5rem">
+          Este é o teu perfil?
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 0.7rem">
+          <button class="btn btn-teal" onclick="confirmProfile()">
+            Continuar, o perfil está correto
+          </button>
+          <button class="btn btn-dark" onclick="showScreen('s1')">
+            Não, quero corrigir
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ S4 DEEP SCAN ═══════ -->
+    <div class="screen" id="s4">
+      <div class="inner fi" style="text-align: center">
+        <p style="font-size: 0.75rem; color: var(--grey); margin-bottom: 0.4rem">
+          A procurar informações sobre
+        </p>
+        <div
+          style="
+            display: inline-block;
+            background: var(--card2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+          ">
+          @<span id="deepUser">—</span>
+        </div>
+        <div
+          style="
+            position: relative;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 0.75rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+          ">
+          <img id="deepPic" src="" style="width: 100%; height: 100%; object-fit: cover" />
+          <div
+            style="
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 2px;
+              background: linear-gradient(90deg, transparent, var(--teal), transparent);
+              animation: scan-line 1.5s linear infinite;
+            "></div>
+          <div
+            style="
+              position: absolute;
+              bottom: 4px;
+              right: 4px;
+              background: rgba(0, 0, 0, 0.7);
+              border-radius: 50%;
+              width: 22px;
+              height: 22px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 0.7rem;
+            ">
+            &#x1F50D;
+          </div>
+        </div>
+        <p
+          style="
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--grey);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+          ">
+          A ANALISAR PERFIS...
+        </p>
+
+        <!-- CAROUSEL -->
+        <div id="deepAvs"><div id="carTrack"></div></div>
+
+        <!-- PROGRESS DOTS -->
+        <div class="scan-dots">
+          <div class="sdot on"></div>
+          <div class="sdot on"></div>
+          <div class="sdot on"></div>
+          <div class="sdot" id="sd4"></div>
+        </div>
+
+        <p
+          style="
+            font-size: 0.8rem;
+            color: var(--grey);
+            margin-bottom: 1.25rem;
+            line-height: 1.6;
+          ">
+          Aguarda enquanto analisamos
+          <strong style="color: var(--white)"
+            >dados divulgados e registos de interação</strong
+          >
+        </p>
+        <h3
+          style="font-size: 1rem; font-weight: 800; margin-bottom: 0.75rem"
+          id="scanComplete">
+          A analisar fontes de dados...
+        </h3>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+          ">
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid rgba(255, 31, 90, 0.2);
+              border-radius: 10px;
+              padding: 0.65rem 0.75rem;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              font-size: 0.78rem;
+              font-weight: 600;
+            ">
+            <div
+              style="
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: rgba(255, 31, 90, 0.12);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.65rem;
+                color: var(--pink);
+                font-weight: 800;
+              ">
+              &#x2713;
+            </div>
+            Visitantes frequentes do perfil
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid rgba(255, 31, 90, 0.2);
+              border-radius: 10px;
+              padding: 0.65rem 0.75rem;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              font-size: 0.78rem;
+              font-weight: 600;
+            ">
+            <div
+              style="
+                width: 18px;
+                height: 18px;
+                border-radius: 50%;
+                background: rgba(255, 31, 90, 0.12);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.65rem;
+                color: var(--pink);
+                font-weight: 800;
+              ">
+              &#x2713;
+            </div>
+            Capturas de ecrã das histórias
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 0.65rem 0.75rem;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              font-size: 0.78rem;
+              font-weight: 600;
+              color: var(--grey);
+            "
+            id="pi3">
+            <div class="sspin" id="pi3s"></div>
+            Menções em mensagens privadas
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 0.65rem 0.75rem;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              font-size: 0.78rem;
+              font-weight: 600;
+              color: var(--grey);
+            "
+            id="pi4">
+            <div class="sspin" id="pi4s"></div>
+            Admiradores secretos
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 0.65rem 0.75rem;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              font-size: 0.78rem;
+              font-weight: 600;
+              color: var(--grey);
+            "
+            id="pi5">
+            <div class="sspin" id="pi5s"></div>
+            Deteção de bloqueios
+          </div>
+          <div
+            style="
+              background: var(--card);
+              border: 1px solid var(--border);
+              border-radius: 10px;
+              padding: 0.65rem 0.75rem;
+              display: flex;
+              align-items: center;
+              gap: 0.5rem;
+              font-size: 0.78rem;
+              font-weight: 600;
+              color: var(--grey);
+            "
+            id="pi6">
+            <div class="sspin" id="pi6s"></div>
+            Análise do público
+          </div>
+        </div>
+
+        <div class="card card-pink" style="padding: 1rem; text-align: center">
+          <div class="BB" style="font-size: 2rem; color: var(--pink)">847 000+</div>
+          <div style="font-size: 0.75rem; color: var(--grey)">
+            Utilizadores analisaram perfis e descobriram visitantes ocultos
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════ S6 OVERVIEW ═══════ -->
+    <div class="screen" id="s6">
+      <div class="inner fi">
+        <div class="prog">
+          <div class="pseg a"></div>
+          <div class="pseg"></div>
+          <div class="pseg"></div>
+          <div class="pseg"></div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          ">
+          <p style="font-size: 0.75rem; color: var(--grey)">
+            Resultados de
+            <strong style="color: var(--white)">@<span class="ru">—</span></strong>
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--teal)"
+            >1/4</span
+          >
+        </div>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            margin-bottom: 0.85rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 0.9rem 1rem;
+          ">
+          <div class="avring" style="width: 56px; height: 56px">
+            <div class="avborder" style="animation-duration: 4s"></div>
+            <div class="avinner">
+              <img id="rPic" src="" style="display: none" />
+              <div class="avinit" style="font-size: 1.1rem" id="rInit">?</div>
+            </div>
+          </div>
+          <div>
+            <div style="font-size: 1rem; font-weight: 800" id="rName">—</div>
+            <div style="display: flex; gap: 1rem; margin-top: 0.2rem">
+              <div style="font-size: 0.73rem; color: var(--grey)">
+                <strong style="color: var(--white)" id="rPosts">—</strong> publicações
+              </div>
+              <div style="font-size: 0.73rem; color: var(--grey)">
+                <strong style="color: var(--white)" id="rFollowers">—</strong> seguidores
+              </div>
+              <div style="font-size: 0.73rem; color: var(--grey)">
+                <strong style="color: var(--white)" id="rFollowing">—</strong> a seguir
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          style="display: flex; gap: 0.4rem; margin-bottom: 0.85rem"
+          id="avPreview"></div>
+        <p style="font-size: 0.88rem; margin-bottom: 0.85rem">
+          <strong style="color: var(--pink)" id="visitAlert">33 pessoas</strong> visitaram o teu perfil esta semana
+        </p>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+            margin-bottom: 0.85rem;
+          ">
+          <div class="sbox">
+            <span class="snum" id="stV">–</span>
+            <span style="font-size: 0.72rem; color: var(--grey)"
+              >visitantes do perfil detetados</span
+            >
+          </div>
+          <div class="sbox">
+            <span class="snum" style="color: #9b6dff" id="stS">–</span>
+            <span style="font-size: 0.72rem; color: var(--grey)"
+              >capturas de ecrã das histórias detetadas</span
+            >
+          </div>
+          <div class="sbox">
+            <span class="snum" id="stP">–</span>
+            <span style="font-size: 0.72rem; color: var(--grey)"
+              >pessoas fizeram capturas de ecrã do teu perfil</span
+            >
+          </div>
+          <div class="sbox">
+            <span class="snum" style="color: var(--teal)" id="stD">–</span>
+            <span style="font-size: 0.72rem; color: var(--grey)">menções em mensagens privadas encontradas</span>
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid rgba(255, 31, 90, 0.3);
+            border-radius: 12px;
+            padding: 0.85rem;
+            margin-bottom: 1rem;
+            font-size: 0.82rem;
+            color: var(--pink);
+            text-align: center;
+            line-height: 1.5;
+            animation: glow-pulse 2.5s infinite;
+          ">
+          Encontrámos atividade que precisas de ver. Toca em Seguinte para consultar cada categoria.
+        </div>
+        <button class="btn btn-pink" onclick="showScreen('s7')">
+          Seguinte: Visitantes do perfil &#xBB;
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════ S7 PROFILE VISITORS ═══════ -->
+    <div class="screen" id="s7">
+      <div class="inner fi">
+        <div class="prog">
+          <div class="pseg d"></div>
+          <div class="pseg a"></div>
+          <div class="pseg"></div>
+          <div class="pseg"></div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          ">
+          <p style="font-size: 0.75rem; color: var(--grey)">
+            Resultados de
+            <strong style="color: var(--white)">@<span class="ru">—</span></strong>
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--teal)"
+            >2/4</span
+          >
+        </div>
+        <div
+          style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.4rem">
+          <span style="color: var(--pink)">&#x1F441;&#xFE0F;</span>
+          <h2 style="font-size: 1.3rem; font-weight: 800">Visitantes do perfil</h2>
+        </div>
+        <p style="font-size: 0.83rem; color: var(--grey); margin-bottom: 1.25rem">
+          Encontrámos <strong style="color: var(--pink)" id="visCount">–</strong> pessoas que visitaram o teu perfil esta semana.
+        </p>
+        <div class="card" style="margin-bottom: 1rem">
+          <!-- 2 visible real rows -->
+          <div id="visitorList"></div>
+          <!-- blurred rows with real photos -->
+          <div id="blurList7"></div>
+          <div
+            style="
+              text-align: center;
+              padding: 0.75rem 0 0;
+              font-size: 0.78rem;
+              color: var(--grey);
+              border-top: 1px solid var(--border);
+              margin-top: 0.5rem;
+            ">
+            &#x1F512; +<span id="hiddenCount">27</span> visitantes adicionais encontrados
+          </div>
+        </div>
+        <button class="btn btn-pink" onclick="showScreen('s8')">
+          Seguinte: Capturas de ecrã das histórias &#xBB;
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════ S8 STORY SCREENSHOTS ═══════ -->
+    <div class="screen" id="s8">
+      <div class="inner fi">
+        <div class="prog">
+          <div class="pseg d"></div>
+          <div class="pseg d"></div>
+          <div class="pseg a"></div>
+          <div class="pseg"></div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          ">
+          <p style="font-size: 0.75rem; color: var(--grey)">
+            Resultados de
+            <strong style="color: var(--white)">@<span class="ru">—</span></strong>
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--teal)"
+            >3/4</span
+          >
+        </div>
+        <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem">
+          &#x1F4F8; Capturas de ecrã das histórias
+        </h2>
+        <p style="font-size: 0.83rem; color: var(--grey); margin-bottom: 0.4rem">
+          Detetámos
+          <strong style="color: var(--teal)" id="storyCount">–</strong> capturas de ecrã das tuas histórias esta semana.
+        </p>
+        <p
+          style="
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--grey2);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.25rem;
+          ">
+          Atividade detetada
+        </p>
+        <!-- blurred cards with real photos -->
+        <div id="blurList8" style="margin-bottom: 1rem"></div>
+        <button class="btn btn-pink" onclick="showScreen('s9')">
+          Seguinte: Menções em mensagens privadas &#xBB;
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════ S9 DM MENTIONS ═══════ -->
+    <div class="screen" id="s9">
+      <div class="inner fi">
+        <div class="prog">
+          <div class="pseg d"></div>
+          <div class="pseg d"></div>
+          <div class="pseg d"></div>
+          <div class="pseg a"></div>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+          ">
+          <p style="font-size: 0.75rem; color: var(--grey)">
+            Resultados de
+            <strong style="color: var(--white)">@<span class="ru">—</span></strong>
+          </p>
+          <span style="font-size: 0.75rem; font-weight: 700; color: var(--teal)"
+            >4/4</span
+          >
+        </div>
+        <h2 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.4rem">
+          &#x1F4AC; Menções em mensagens privadas
+        </h2>
+        <p style="font-size: 0.83rem; color: var(--grey); margin-bottom: 1.25rem">
+          O teu nome foi mencionado em
+          <strong style="color: var(--teal)">4 conversas</strong> entre os teus seguidores.
+        </p>
+        <!-- DM PREVIEW -->
+        <div
+          style="
+            background: #0a0a0a;
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+          ">
+          <!-- Header -->
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.7rem;
+              padding: 0.85rem 1rem;
+              border-bottom: 1px solid #1a1a1a;
+            ">
+            <span style="color: #fff; font-size: 1.4rem; opacity: 0.5; line-height: 1"
+              >&#x2039;</span
+            >
+            <div
+              id="dmAv"
+              style="
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: #2a2a2a;
+                flex-shrink: 0;
+                overflow: hidden;
+                background-size: cover;
+                background-position: center;
+              ">
+              <div
+                id="dmAvInner"
+                style="
+                  width: 100%;
+                  height: 100%;
+                  background: linear-gradient(135deg, #2a2a2a, #3a3a3a);
+                "></div>
+            </div>
+            <div style="flex: 1; min-width: 0">
+              <div
+                style="
+                  width: 100px;
+                  height: 9px;
+                  background: #2a2a2a;
+                  border-radius: 4px;
+                  filter: blur(5px);
+                  margin-bottom: 4px;
+                "></div>
+              <div
+                style="
+                  width: 65px;
+                  height: 6px;
+                  background: #1a1a1a;
+                  border-radius: 4px;
+                  filter: blur(4px);
+                "></div>
+            </div>
+            <!-- Phone icon SVG -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#555"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 6.29 6.29l1.62-1.62a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <!-- Video icon SVG -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#555"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="2" y="7" width="15" height="10" rx="2" ry="2"></rect>
+              <polyline points="17 10.5 22 8 22 16 17 13.5"></polyline>
+            </svg>
+          </div>
+          <!-- Messages -->
+          <div
+            style="
+              padding: 0.9rem 1rem 1rem;
+              display: flex;
+              flex-direction: column;
+              gap: 0.5rem;
+            ">
+            <div
+              style="
+                max-width: 80%;
+                background: #1e1e1e;
+                border-radius: 2px 16px 16px 16px;
+                padding: 0.6rem 0.9rem;
+                font-size: 0.84rem;
+                color: #111;
+                filter: blur(4px);
+              ">
+              mensagem privada aqui...
+            </div>
+            <div
+              style="
+                max-width: 78%;
+                background: #262626;
+                border-radius: 2px 16px 16px 16px;
+                padding: 0.6rem 0.9rem;
+                font-size: 0.84rem;
+                color: #ddd;
+              ">
+              <span id="dmUsername" style="font-weight: 600; color: #fff">nome de utilizador</span>
+              é
+              <span style="filter: blur(4px); display: inline-block; color: #999"
+                >algo</span
+              >
+            </div>
+            <div
+              style="
+                max-width: 72%;
+                background: #262626;
+                border-radius: 2px 16px 16px 16px;
+                padding: 0.6rem 0.9rem;
+                font-size: 0.84rem;
+                color: #ddd;
+              ">
+              sabes quem é
+            </div>
+          </div>
+        </div>
+        <p
+          style="
+            color: var(--teal);
+            text-align: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+          ">
+          VER TODAS AS CONVERSAS <strong>SEM CENSURA</strong>
+        </p>
+        <!-- BLURRED DM LIST -->
+        <div id="blurList9" style="margin-bottom: 1rem"></div>
+        <button class="btn btn-pink" onclick="showScreen('s10')">
+          Ver relatório completo &#xBB;
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══════ S10 SALES ═══════ -->
+    <div class="screen" id="s10">
+      <div class="inner fi">
+        <!-- HEADER -->
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem">
+          <div class="avring" style="width: 70px; height: 70px">
+            <div class="avborder" style="animation-duration: 4s"></div>
+            <div class="avinner">
+              <img id="offerPic" src="" style="display: none" />
+              <div class="avinit" style="font-size: 1.3rem" id="offerInit">?</div>
+            </div>
+          </div>
+          <h2 style="font-size: 1.5rem; font-weight: 900; line-height: 1.2">
+            Desbloquear o<br />relatório completo
+          </h2>
+        </div>
+
+        <p
+          style="
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--grey);
+            margin-bottom: 1.25rem;
+          ">
+          Vais ter acesso a:
+        </p>
+
+        <!-- FEATURES 2x2 -->
+        <div class="feat-grid-2">
+          <div class="feat-box">
+            <div class="feat-box-icon">&#x1F50E;</div>
+            <div class="feat-box-title">Visualizações repetidas de histórias</div>
+            <div class="feat-box-desc">Pessoas que viram e voltaram a ver as tuas histórias</div>
+          </div>
+          <div class="feat-box">
+            <div class="feat-box-icon">&#x1F50E;</div>
+            <div class="feat-box-title">Acompanhamento de visitas</div>
+            <div class="feat-box-desc">Descobre quem visita o teu perfil</div>
+          </div>
+          <div class="feat-box">
+            <div class="feat-box-icon">&#x1F50E;</div>
+            <div class="feat-box-title">Acompanhamento de menções</div>
+            <div class="feat-box-desc">
+              Descobre quais os seguidores que mais falam de ti
+            </div>
+          </div>
+          <div class="feat-box">
+            <div class="feat-box-icon">&#x1F50E;</div>
+            <div class="feat-box-title">Quem te observa</div>
+            <div class="feat-box-desc">
+              Vê quem fez CAPTURAS DE ECRÃ do teu perfil e das tuas histórias
+            </div>
+          </div>
+        </div>
+
+        <p
+          style="
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+          ">
+          E muito mais...
+        </p>
+
+        <!-- COPY -->
+        <p
+          style="
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+            text-align: center;
+          ">
+          O nosso sistema de relatórios é o único no mercado que realmente funciona.
+        </p>
+        <p
+          style="
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+            text-align: center;
+          ">
+          Podíamos cobrar o que já gastaste em encontros, roupa e jantares que nunca deram em nada.
+        </p>
+        <p
+          style="
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--pink);
+            text-align: center;
+            margin-bottom: 1.25rem;
+          ">
+          Que só te trouxeram desilusões.
+        </p>
+        <div
+          style="
+            width: 50px;
+            height: 5px;
+            background: var(--card2);
+            border-radius: 3px;
+            margin: 0 auto 1.5rem;
+          "></div>
+        <p
+          style="
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+            text-align: center;
+          ">
+          Mas não vamos fazer isso.
+        </p>
+        <h2
+          style="
+            font-size: 1.6rem;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+          ">
+          Queremos que tenhas um objetivo
+        </h2>
+        <p
+          style="
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.65);
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+            text-align: center;
+          ">
+          Estamos aqui para te dar a única coisa que ainda te falta: orientação.
+        </p>
+        <p
+          style="
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            text-align: center;
+          ">
+          Não vale a pena humilhares-te por alguém que não te quer,
+          <strong style="color: var(--white)"
+            >esta é a tua oportunidade de ter certezas.</strong
+          >
+        </p>
+
+        <!-- COUNTDOWN BADGE -->
+        <div style="text-align: center; margin-bottom: 1.25rem">
+          <div
+            style="
+              display: inline-block;
+              background: rgba(255, 179, 64, 0.12);
+              border: 1px solid rgba(255, 179, 64, 0.3);
+              border-radius: 20px;
+              padding: 0.45rem 1.25rem;
+              font-size: 0.82rem;
+              font-weight: 700;
+              color: #ffb340;
+            "
+            id="countdownTimer">
+            Oferta por tempo limitado: 15:00
+          </div>
+        </div>
+
+        <!-- URGENCY -->
+        <div style="text-align: center; margin-bottom: 1.25rem">
+          <p style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.35rem">
+            &#x26A0;&#xFE0F; Não saias desta página!
+          </p>
+          <p style="font-size: 0.85rem; color: var(--grey)">
+            Só permitimos ver a pré-visualização
+            <strong style="color: var(--white)">UMA VEZ</strong>
+          </p>
+        </div>
+
+        <!-- PRICE BOX -->
+        <div class="price-row" style="margin-bottom: 0.75rem">
+          <div>
+            <div style="font-size: 1.5rem; margin-bottom: 0.25rem">&#x1F512;</div>
+            <div style="font-size: 1.1rem; font-weight: 900; line-height: 1.2">
+              O teu<br />relatório completo
+            </div>
+          </div>
+          <div style="text-align: right">
+            <div
+              style="
+                display: inline-block;
+                background: #222;
+                border-radius: 20px;
+                padding: 0.25rem 0.75rem;
+                font-size: 0.72rem;
+                font-weight: 800;
+                color: var(--white);
+                margin-bottom: 0.35rem;
+              ">
+              PROMOÇÃO com 50% de desconto
+            </div>
+            <div style="font-size: 0.82rem; color: var(--grey)">de 19,80 € por:</div>
+            <div
+              style="
+                font-family: &quot;Bebas Neue&quot;, sans-serif;
+                font-size: 2.8rem;
+                line-height: 1;
+                color: var(--white);
+              ">
+              9,90<small style="font-size: 1.2rem; opacity: 0.6"> €</small>
+            </div>
+            <div style="font-size: 0.78rem; color: var(--grey)">pagamento único</div>
+          </div>
+        </div>
+
+        <!-- LIFETIME + GUARANTEE -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.65rem;
+            margin-bottom: 0.65rem;
+          ">
+          <div class="card" style="text-align: center; padding: 1rem">
+            <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.35rem">
+              Acesso vitalício
+            </div>
+            <div style="font-size: 0.78rem; color: var(--grey); line-height: 1.4">
+              Sem mensalidades, pagamento único
+            </div>
+          </div>
+          <div class="card" style="text-align: center; padding: 1rem">
+            <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.35rem">
+              Garantia de 14 dias
+            </div>
+            <div style="font-size: 0.78rem; color: var(--grey); line-height: 1.4">
+              Reembolso total se não ficares satisfeito
+            </div>
+          </div>
+        </div>
+
+        <!-- BONUS -->
+        <div
+          class="card"
+          style="text-align: center; margin-bottom: 1.25rem; padding: 1rem">
+          <div style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.25rem">
+            + Oferta
+          </div>
+          <div style="font-size: 0.82rem; color: var(--grey)">
+            Livro digital: Manual de atração e reconquista
+          </div>
+        </div>
+
+        <!-- CTA BUTTON -->
+        <button
+          class="btn btn-pink"
+          style="
+            font-size: 1.05rem;
+            padding: 1.15rem;
+            margin-bottom: 1.5rem;
+            animation: glow-pulse 2s infinite;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+          "
+          onclick="openCheckoutPopup();"
+          >Quero o relatório completo
+        </button>
+
+        <!-- REPORT FOR -->
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+          ">
+          <div class="avring" style="width: 44px; height: 44px">
+            <div class="avborder" style="animation-duration: 5s"></div>
+            <div class="avinner">
+              <img id="offerPic2" src="" style="display: none" />
+              <div class="avinit" style="font-size: 0.9rem" id="offerInit2">?</div>
+            </div>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--grey)">
+            Relatório de
+            <strong style="color: var(--white)">@<span id="offerUser">—</span></strong>
+          </p>
+        </div>
+
+        <!-- WHAT USERS FOUND -->
+        <h3
+          style="
+            font-size: 1rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+          ">
+          O que os utilizadores descobriram:
+        </h3>
+        <div class="card" style="margin-bottom: 1.25rem">
+          <div class="testi">
+            <div class="thd">
+              <div class="tav">S</div>
+
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 700">Sarah, 23</div>
+                <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+              </div>
+            </div>
+            <p>
+              Descobri que o meu ex ainda via o meu perfil todos os dias. 23 vezes num mês.
+            </p>
+          </div>
+          <div class="testi">
+            <div class="thd">
+              <div class="tav">M</div>
+
+              <div>
+                <div style="font-size: 0.85rem; font-weight: 700">Maria, 27</div>
+                <div class="stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div>
+              </div>
+            </div>
+            <p>
+              Havia um rapaz de quem eu gostava, mas não tinha coragem de lhe enviar mensagem. Afinal, visitou o meu perfil 11 vezes na semana passada. Agora estamos a falar.
+            </p>
+          </div>
+        </div>
+
+        <!-- CHECKLIST -->
+        <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.75rem">
+          Eis exatamente o que vais ver:
+        </h3>
+        <div style="margin-bottom: 1.25rem">
+          <div class="ci">
+            <span class="ck">&#x2713;</span>
+            <span>Todas as pessoas que visitaram o teu perfil — nomes e número de visitas</span>
+          </div>
+          <div class="ci">
+            <span class="ck">&#x2713;</span>
+            <span>Quem fez capturas de ecrã das tuas histórias — e quando</span>
+          </div>
+          <div class="ci">
+            <span class="ck">&#x2713;</span>
+            <span>Quem fala de ti em mensagens privadas com outras pessoas</span>
+          </div>
+          <div class="ci">
+            <span class="ck">&#x2713;</span>
+            <span>Os teus visitantes habituais — quem volta sempre</span>
+          </div>
+          <div class="ci">
+            <span class="ck">&#x2713;</span>
+            <span>Quem te bloqueou — sem tu saberes</span>
+          </div>
+          <div class="ci">
+            <span class="ck">&#x2713;</span>
+            <span>Quem deixou de te seguir — e quando</span>
+          </div>
+          <div class="ci">
+            <span class="ck">&#x2713;</span><span>Quem te ocultou as suas histórias</span>
+          </div>
+          <div class="ci">
+            <span class="ck">&#x2713;</span>
+            <span>Quem guardou as tuas publicações nas suas coleções</span>
+          </div>
+        </div>
+
+        <!-- GUARANTEE -->
+        <div
+          style="
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.25rem;
+          ">
+          <div style="font-size: 1.6rem; margin-bottom: 0.5rem">&#x1F6E1;&#xFE0F;</div>
+          <div style="font-size: 1rem; font-weight: 800; margin-bottom: 0.35rem">
+            Garantia de reembolso de 14 dias
+          </div>
+          <p style="font-size: 0.82rem; color: var(--grey); line-height: 1.6">
+            Não estás satisfeito? Recebe um
+            <strong style="color: var(--pink)">reembolso total</strong> no prazo de 14 dias. A tua compra é totalmente isenta de risco.
+          </p>
+        </div>
+
+        <!-- CLOSING COPY -->
+        <div
+          style="
+            border-top: 1px solid var(--border);
+            padding-top: 1.25rem;
+            margin-bottom: 1.25rem;
+          ">
+          <p
+            style="
+              text-align: center;
+              font-size: 0.85rem;
+              color: rgba(255, 255, 255, 0.5);
+              line-height: 1.7;
+              margin-bottom: 0.5rem;
+            ">
+            Podes fechar esta página e continuar na dúvida.
+          </p>
+          <p
+            style="
+              text-align: center;
+              font-size: 0.85rem;
+              color: rgba(255, 255, 255, 0.6);
+              line-height: 1.7;
+            ">
+            Ou podes descobrir <strong style="color: var(--white)">em 30 segundos</strong> se a pessoa em quem estás a pensar também pensa em ti.
+          </p>
+        </div>
+
+        <button
+          class="btn btn-pink"
+          style="font-size: 1.05rem; padding: 1.15rem; margin-bottom: 0.65rem; width: 100%; border: none; cursor: pointer;"
+          onclick="openCheckoutPopup();">
+          Quero o relatório completo
+        </button>
+        <p
+          style="
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--grey2);
+            padding-bottom: 2rem;
+          ">
+          &#x1F512; Pagamento seguro &middot; Encriptação SSL &middot; Garantia de 14 dias
+        </p>
+      </div>
+    </div>
+
+    <!-- ERROR SCREEN -->
+    <div class="screen" id="errorScreen" style="justify-content: center">
+      <div
+        style="
+          width: 100%;
+          max-width: 430px;
+          margin: 0 auto;
+          text-align: center;
+          padding: 2rem 1.25rem;
+        ">
+        <div style="font-size: 4rem; margin-bottom: 1.25rem">&#x1F575;&#xFE0F;</div>
+        <h2
+          style="
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 0.75rem;
+            color: #fff;
+          ">
+          Perfil não encontrado
+        </h2>
+        <p
+          style="
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.7;
+            margin-bottom: 0.5rem;
+          ">
+          Não encontrámos nenhum perfil do Instagram com este nome de utilizador.
+        </p>
+        <p
+          style="
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+          ">
+          Verifica se escreveste corretamente e tenta novamente.
+        </p>
+        <div
+          style="
+            background: rgba(255, 31, 90, 0.08);
+            border: 1px solid rgba(255, 31, 90, 0.2);
+            border-radius: 14px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+          ">
+          <p style="font-size: 0.82rem; color: var(--grey); margin-bottom: 0.25rem">
+            Nome de utilizador pesquisado:
+          </p>
+          <p style="font-size: 1rem; font-weight: 700; color: var(--pink)">
+            @<span id="errorUsername">—</span>
+          </p>
+        </div>
+        <button class="btn btn-pink" onclick="retryFromError()">
+          &#x21BA; Tentar novamente
+        </button>
+      </div>
+    </div>
+
+    <script src="./assets/js/script.js"></script>
+
+    <!-- ═══════ CHECKOUT POPUP ═══════ -->
+    <div id="checkoutPopup" style="
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    ">
+      <div style="
+        background: #1a1a2e;
+        border: 1px solid rgba(255,31,90,0.3);
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+        box-shadow: 0 0 60px rgba(255,31,90,0.15);
+      ">
+        <!-- Close button -->
+        <button onclick="closeCheckoutPopup()" style="
+          position: absolute;
+          top: 1rem; right: 1rem;
+          background: rgba(255,255,255,0.07);
+          border: none;
+          color: rgba(255,255,255,0.5);
+          width: 32px; height: 32px;
+          border-radius: 50%;
+          cursor: pointer;
+          font-size: 1rem;
+          display: flex; align-items: center; justify-content: center;
+        ">✕</button>
+
+        <!-- Header -->
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.4rem;">🔓</div>
+          <h2 style="font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem;">
+            Está quase!
+          </h2>
+          <p style="font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.5;">
+            Introduz o teu nome e endereço de e-mail para continuar.
+          </p>
+        </div>
+
+        <!-- Name field -->
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">
+            O teu nome completo
+          </label>
+          <input
+            id="popupName"
+            type="text"
+            placeholder="João Silva"
+            autocomplete="name"
+            style="
+              width: 100%;
+              background: rgba(255,255,255,0.07);
+              border: 1px solid rgba(255,255,255,0.12);
+              border-radius: 12px;
+              padding: 0.85rem 1rem;
+              color: #fff;
+              font-size: 0.95rem;
+              font-family: inherit;
+              outline: none;
+              box-sizing: border-box;
+              transition: border-color 0.2s;
+            "
+            onfocus="this.style.borderColor='rgba(255,31,90,0.5)'"
+            onblur="this.style.borderColor='rgba(255,255,255,0.12)'"
+          />
+        </div>
+
+        <!-- Email field -->
+        <div style="margin-bottom: 1.5rem;">
+          <label style="display: block; font-size: 0.75rem; color: rgba(255,255,255,0.55); margin-bottom: 0.4rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;">
+            Endereço de e-mail
+          </label>
+          <input
+            id="popupEmail"
+            type="email"
+            placeholder="joao@exemplo.pt"
+            autocomplete="email"
+            style="
+              width: 100%;
+              background: rgba(255,255,255,0.07);
+              border: 1px solid rgba(255,255,255,0.12);
+              border-radius: 12px;
+              padding: 0.85rem 1rem;
+              color: #fff;
+              font-size: 0.95rem;
+              font-family: inherit;
+              outline: none;
+              box-sizing: border-box;
+              transition: border-color 0.2s;
+            "
+            onfocus="this.style.borderColor='rgba(255,31,90,0.5)'"
+            onblur="this.style.borderColor='rgba(255,255,255,0.12)'"
+          />
+          <div id="emailError" style="display:none; color: rgba(255,31,90,0.9); font-size: 0.75rem; margin-top: 0.35rem;">
+            Introduz um endereço de e-mail válido.
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <button onclick="proceedToCheckout()" style="
+          width: 100%;
+          background: linear-gradient(135deg, #ff1f5a, #ff5a7e);
+          color: #fff;
+          border: none;
+          border-radius: 14px;
+          padding: 1rem;
+          font-size: 1rem;
+          font-weight: 800;
+          cursor: pointer;
+          font-family: inherit;
+          letter-spacing: 0.02em;
+          box-shadow: 0 4px 20px rgba(255,31,90,0.4);
+          transition: opacity 0.2s, transform 0.1s;
+        "
+        onmousedown="this.style.transform='scale(0.98)'"
+        onmouseup="this.style.transform='scale(1)'"
+        >
+          🔒 Aceder ao meu relatório agora
+        </button>
+
+        <p style="text-align:center; font-size:0.68rem; color:rgba(255,255,255,0.3); margin-top:0.85rem;">
+          Encriptação SSL · Garantia de reembolso de 14 dias
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // ─── Popup logic ───────────────────────────────────────────
+
+
+      function openCheckoutPopup() {
+        const popup = document.getElementById('checkoutPopup');
+        popup.style.display = 'flex';
+        // Fire pixel event 
+        if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+        // Focus name field
+        setTimeout(() => document.getElementById('popupName').focus(), 100);
+      }
+
+      function closeCheckoutPopup() {
+        document.getElementById('checkoutPopup').style.display = 'none';
+        document.getElementById('emailError').style.display = 'none';
+      }
+
+      // Close popup when clicking backdrop
+      document.getElementById('checkoutPopup').addEventListener('click', function(e) {
+        if (e.target === this) closeCheckoutPopup();
+      });
+
+      function proceedToCheckout() {
+        const nameInput  = document.getElementById('popupName');
+        const emailInput = document.getElementById('popupEmail');
+        const errorDiv   = document.getElementById('emailError');
+
+        const name  = nameInput.value.trim();
+        const email = emailInput.value.trim();
+
+        // Basic email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          errorDiv.style.display = 'block';
+          emailInput.style.borderColor = 'rgba(255,31,90,0.6)';
+          emailInput.focus();
+          return;
+        }
+        errorDiv.style.display = 'none';
+
+        // Dados mantidos apenas neste separador; nunca modificar o e-mail do pagador.
+        sessionStorage.setItem('academicCustomer', JSON.stringify({name, email}));
+        window.location.href = './checkout.html';
+      }
+
+      // Allow pressing Enter to submit
+      ['popupName', 'popupEmail'].forEach(function(id) {
+        document.getElementById(id).addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') proceedToCheckout();
+        });
+      });
+    </script>
+
+
+    <!-- API: seguidores reais no bloco #avPreview sem alterar o funil original -->
+    <script>
+      (function () {
+        const API_BASE = "https://insta-i7wt.onrender.com";
+        let selectedFollowers = [];
+        let lastUsername = "";
+        let repaintTimer = null;
+        let rendering = false;
+
+        function el(id) {
+          return document.getElementById(id);
+        }
+
+        function cleanUsername(value) {
+          return String(value || "").trim().replace(/^@+/, "").toLowerCase();
+        }
+
+        function followerPhotoUrl(follower) {
+          const username = cleanUsername(follower && follower.username);
+          if (follower && follower.profile_pic_proxy_url) return follower.profile_pic_proxy_url;
+          if (username) return API_BASE + "/pic-proxy/" + encodeURIComponent(username);
+          return follower && (follower.profile_pic_url_hd || follower.profile_pic_url || follower.avatar || "");
+        }
+
+        function paintFollowerAvPreview() {
+          const preview = el("avPreview");
+          if (!preview || !selectedFollowers.length || rendering) return;
+
+          rendering = true;
+
+          // Usa os blocos já existentes do funil. Não muda textos, números, telas ou fluxo.
+          let blocks = Array.from(preview.children);
+
+          // Se o script original ainda não criou blocos suficientes, criamos só o mínimo visual.
+          while (blocks.length < Math.min(5, selectedFollowers.length)) {
+            const block = document.createElement("div");
+            block.style.width = "36px";
+            block.style.height = "36px";
+            block.style.borderRadius = "50%";
+            block.style.background = "var(--card2)";
+            block.style.border = "2px solid var(--border)";
+            preview.appendChild(block);
+            blocks = Array.from(preview.children);
+          }
+
+          selectedFollowers.slice(0, 5).forEach(function (follower, index) {
+            const block = blocks[index];
+            if (!block) return;
+
+            const photo = followerPhotoUrl(follower);
+            const username = cleanUsername(follower.username) || "follower";
+
+            block.innerHTML = "";
+            block.textContent = "";
+            block.title = "@" + username;
+            block.style.width = "36px";
+            block.style.height = "36px";
+            block.style.borderRadius = "50%";
+            block.style.border = "2px solid var(--border)";
+            block.style.opacity = "1";
+            block.style.display = "block";
+            block.style.flexShrink = "0";
+            block.style.overflow = "hidden";
+            block.style.backgroundColor = "var(--card2)";
+            block.style.backgroundImage = photo ? "url('" + photo.replace(/'/g, "%27") + "')" : "none";
+            block.style.backgroundSize = "cover";
+            block.style.backgroundPosition = "center";
+            block.style.backgroundRepeat = "no-repeat";
+            block.style.filter = index >= 2 ? "blur(3px)" : "none";
+          });
+
+          setTimeout(function () {
+            rendering = false;
+          }, 0);
+        }
+
+        function startRepaintLoop() {
+          clearInterval(repaintTimer);
+          let ticks = 0;
+          repaintTimer = setInterval(function () {
+            paintFollowerAvPreview();
+            ticks++;
+            if (ticks >= 60) clearInterval(repaintTimer); // 30s garantindo contra overwrite do script original
+          }, 500);
+        }
+
+        async function loadSelectedFollowers(username) {
+          username = cleanUsername(username);
+          if (!username) return;
+          lastUsername = username;
+
+          try {
+            const response = await fetch(API_BASE + "/followers-sample/" + encodeURIComponent(username) + "?limit=5");
+            const json = await response.json().catch(function () { return {}; });
+
+            if (!response.ok || !json.ok || !json.data || !Array.isArray(json.data.followers)) {
+              console.warn("followers-sample indisponível", json);
+              return;
+            }
+
+            selectedFollowers = json.data.followers.filter(function (follower) {
+              return follower && follower.username;
+            }).slice(0, 5);
+
+            paintFollowerAvPreview();
+            startRepaintLoop();
+          } catch (err) {
+            console.warn("Erro ao carregar seguidores selecionados:", err.message || err);
+          }
+        }
+
+        // Envolve o startFlow original: mantém o funil intacto e só dispara a busca dos seguidores.
+        const originalStartFlow = window.startFlow;
+        window.startFlow = function () {
+          const input = el("usernameInput");
+          const username = cleanUsername(input && input.value);
+          if (username) loadSelectedFollowers(username);
+
+          if (typeof originalStartFlow === "function") {
+            return originalStartFlow.apply(this, arguments);
+          }
+        };
+
+        // Envolve o showScreen original: se abrir a tela do overview, repinta os blocos.
+        const originalShowScreen = window.showScreen;
+        window.showScreen = function (screenId) {
+          let result;
+          if (typeof originalShowScreen === "function") {
+            result = originalShowScreen.apply(this, arguments);
+          } else {
+            document.querySelectorAll(".screen").forEach(function (screen) {
+              screen.classList.remove("active");
+            });
+            const target = el(screenId);
+            if (target) target.classList.add("active");
+          }
+
+          if (screenId === "s6") {
+            setTimeout(paintFollowerAvPreview, 50);
+            setTimeout(paintFollowerAvPreview, 500);
+            setTimeout(paintFollowerAvPreview, 1500);
+          }
+
+          return result;
+        };
+
+        // Envolve o confirmProfile original: não remove nada do fluxo, só garante o repaint.
+        const originalConfirmProfile = window.confirmProfile;
+        window.confirmProfile = function () {
+          if (!selectedFollowers.length && lastUsername) loadSelectedFollowers(lastUsername);
+
+          let result;
+          if (typeof originalConfirmProfile === "function") {
+            result = originalConfirmProfile.apply(this, arguments);
+          }
+
+          setTimeout(paintFollowerAvPreview, 1000);
+          setTimeout(paintFollowerAvPreview, 3000);
+          setTimeout(paintFollowerAvPreview, 5000);
+          startRepaintLoop();
+          return result;
+        };
+
+        // Se o script original recriar #avPreview com cadeados, substituímos novamente por fotos dos seguidores.
+        document.addEventListener("DOMContentLoaded", function () {
+          const preview = el("avPreview");
+          if (!preview || !window.MutationObserver) return;
+
+          const observer = new MutationObserver(function () {
+            if (!rendering && selectedFollowers.length) {
+              setTimeout(paintFollowerAvPreview, 30);
+            }
+          });
+
+          observer.observe(preview, { childList: true, subtree: false });
+        });
+      })();
+    </script>
+
+
+    <!-- API: stories/destaques públicos na etapa 3 sem alterar o funil original -->
+    <script>
+      (function () {
+        const API_BASE = "https://insta-i7wt.onrender.com";
+        let selectedStoryMedia = [];
+        let lastStoryUsername = "";
+        let storyPaintTimer = null;
+        let storyRendering = false;
+
+        function el(id) { return document.getElementById(id); }
+        function cleanUsername(value) { return String(value || "").trim().replace(/^@+/, "").toLowerCase(); }
+
+        function mediaUrl(item) {
+          return item.thumbnail_proxy_url || item.media_proxy_url || item.thumbnail_url || item.media_url || "";
+        }
+
+        function createStoryCard(item, index) {
+          const labels = ["3 capturas de ecrã", "1 captura de ecrã", "Atividade detetada", "História capturada"];
+          const actions = [
+            "fez capturas de ecrã da tua história 3 vezes",
+            "guardou a tua história na galeria",
+            "fez uma captura de ecrã da tua história e reencaminhou-a",
+            "capturou a tua história duas vezes num dia"
+          ];
+
+          const card = document.createElement("div");
+          card.style.display = "flex";
+          card.style.alignItems = "center";
+          card.style.gap = "0.75rem";
+          card.style.background = "var(--card)";
+          card.style.border = "1px solid var(--border)";
+          card.style.borderRadius = "14px";
+          card.style.padding = "0.75rem";
+          card.style.marginBottom = "0.65rem";
+          card.style.overflow = "hidden";
+
+          const thumb = document.createElement("div");
+          thumb.style.width = "74px";
+          thumb.style.height = "92px";
+          thumb.style.borderRadius = "12px";
+          thumb.style.backgroundColor = "var(--card2)";
+          thumb.style.backgroundImage = mediaUrl(item) ? "url('" + mediaUrl(item).replace(/'/g, "%27") + "')" : "none";
+          thumb.style.backgroundSize = "cover";
+          thumb.style.backgroundPosition = "center";
+          thumb.style.flexShrink = "0";
+          thumb.style.position = "relative";
+          thumb.style.border = "1px solid rgba(255,255,255,0.08)";
+
+          const badge = document.createElement("div");
+          badge.textContent = labels[index % labels.length];
+          badge.style.position = "absolute";
+          badge.style.left = "5px";
+          badge.style.right = "5px";
+          badge.style.bottom = "5px";
+          badge.style.background = "rgba(0,0,0,0.72)";
+          badge.style.color = "#fff";
+          badge.style.fontSize = "0.58rem";
+          badge.style.fontWeight = "800";
+          badge.style.textAlign = "center";
+          badge.style.borderRadius = "8px";
+          badge.style.padding = "0.25rem 0.3rem";
+          thumb.appendChild(badge);
+
+          const info = document.createElement("div");
+          info.style.flex = "1";
+          info.style.minWidth = "0";
+
+          const title = document.createElement("div");
+          title.style.fontSize = "0.78rem";
+          title.style.fontWeight = "800";
+          title.style.color = "var(--white)";
+          title.style.marginBottom = "0.2rem";
+          
+          const sourceKey = String(item.source || "").toLowerCase();
+          title.textContent = item.title || (sourceKey.includes("highlight") ? "Destaque detetado" : (sourceKey.includes("fallback") ? "Conteúdo público detetado" : "História detetada"));
+
+          const desc = document.createElement("div");
+          desc.style.fontSize = "0.72rem";
+          desc.style.color = "var(--grey)";
+          desc.style.lineHeight = "1.45";
+          desc.textContent = actions[index % actions.length];
+
+          const src = document.createElement("div");
+          src.style.fontSize = "0.62rem";
+          src.style.color = "var(--pink)";
+          src.style.fontWeight = "800";
+          src.style.marginTop = "0.4rem";
+          
+          const sourceKey2 = String(item.source || "").toLowerCase();
+          src.textContent = sourceKey2.includes("highlight") ? "DESTAQUE PÚBLICO" : (sourceKey2.includes("fallback") ? "CONTEÚDO PÚBLICO DO PERFIL" : "HISTÓRIA PÚBLICA");
+
+          info.appendChild(title);
+          info.appendChild(desc);
+          info.appendChild(src);
+
+          card.appendChild(thumb);
+          card.appendChild(info);
+          return card;
+        }
+
+        function paintStoriesStep() {
+          const container = el("blurList8");
+          if (!container || !selectedStoryMedia.length || storyRendering) return;
+
+          storyRendering = true;
+          container.innerHTML = "";
+          selectedStoryMedia.slice(0, 4).forEach(function (item, index) {
+            container.appendChild(createStoryCard(item, index));
+          });
+          setTimeout(function () { storyRendering = false; }, 0);
+        }
+
+        function startStoryPaintLoop() {
+          clearInterval(storyPaintTimer);
+          let ticks = 0;
+          storyPaintTimer = setInterval(function () {
+            paintStoriesStep();
+            ticks++;
+            if (ticks >= 60) clearInterval(storyPaintTimer);
+          }, 500);
+        }
+
+        async function loadStorySamples(username) {
+          username = cleanUsername(username);
+          if (!username) return;
+          lastStoryUsername = username;
+
+          try {
+            const response = await fetch(API_BASE + "/stories-sample/" + encodeURIComponent(username) + "?limit=4");
+            const json = await response.json().catch(function () { return {}; });
+
+            if (!response.ok || !json.ok || !json.data || !Array.isArray(json.data.media)) {
+              console.warn("stories-sample indisponível", json);
+              return;
+            }
+
+            selectedStoryMedia = json.data.media.filter(function (item) {
+              return item && (item.media_proxy_url || item.thumbnail_proxy_url || item.media_url || item.thumbnail_url);
+            }).slice(0, 4);
+
+            if (selectedStoryMedia.length) {
+              paintStoriesStep();
+              startStoryPaintLoop();
+            }
+          } catch (err) {
+            console.warn("Erro ao carregar stories/destaques:", err.message || err);
+          }
+        }
+
+        const previousStartFlow = window.startFlow;
+        window.startFlow = function () {
+          const input = el("usernameInput");
+          const username = cleanUsername(input && input.value);
+          if (username) loadStorySamples(username);
+
+          if (typeof previousStartFlow === "function") {
+            return previousStartFlow.apply(this, arguments);
+          }
+        };
+
+        const previousShowScreen = window.showScreen;
+        window.showScreen = function (screenId) {
+          let result;
+          if (typeof previousShowScreen === "function") {
+            result = previousShowScreen.apply(this, arguments);
+          }
+          if (screenId === "s8") {
+            setTimeout(paintStoriesStep, 80);
+            setTimeout(paintStoriesStep, 600);
+            setTimeout(paintStoriesStep, 1500);
+            startStoryPaintLoop();
+          }
+          return result;
+        };
+
+        const previousConfirmProfile = window.confirmProfile;
+        window.confirmProfile = function () {
+          if (!selectedStoryMedia.length && lastStoryUsername) loadStorySamples(lastStoryUsername);
+          const result = typeof previousConfirmProfile === "function" ? previousConfirmProfile.apply(this, arguments) : undefined;
+          setTimeout(paintStoriesStep, 2500);
+          setTimeout(paintStoriesStep, 5000);
+          return result;
+        };
+
+        document.addEventListener("DOMContentLoaded", function () {
+          const container = el("blurList8");
+          if (!container || !window.MutationObserver) return;
+
+          const observer = new MutationObserver(function () {
+            if (!storyRendering && selectedStoryMedia.length) {
+              setTimeout(paintStoriesStep, 30);
+            }
+          });
+          observer.observe(container, { childList: true, subtree: false });
+        });
+      })();
+    </script>
+
+  </body>
+</html>
