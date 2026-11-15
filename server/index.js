@@ -46,7 +46,7 @@ async function reconcile(o) {
 const app = http.createServer(async(req,res)=>{
  try {
   const url=new URL(req.url,'http://localhost');
-  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase',version:'1.0.2'});
+  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase',version:'1.0.3'});
   if(url.pathname==='/api/config' && req.method==='GET') return send(res,200,{enabled,amount:990,currency:'EUR',mbwayBase:805,mbwayVat:185});
   if(url.pathname==='/api/eagle/webhook' && req.method==='POST') {
    if(!enabled) return send(res,503,{error:'Pagamentos desativados.'});
@@ -108,7 +108,7 @@ const app = http.createServer(async(req,res)=>{
   if(!file.startsWith(root)) return send(res,404,{error:'Ficheiro não encontrado.'});
   const bytes=await readFile(file);
   const type={'.html':'text/html; charset=utf-8','.js':'application/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.jpg':'image/jpeg','.webp':'image/webp','.woff':'font/woff','.woff2':'font/woff2','.ttf':'font/ttf'}[extname(file)]||'application/octet-stream';
-  res.writeHead(200,{'Content-Type':type,'X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin',...(path==='/checkout.html'?{'Cache-Control':'no-store','Content-Security-Policy':"default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"}: {})});
+  res.writeHead(200,{'Content-Type':type,'X-Content-Type-Options':'nosniff','Referrer-Policy':'same-origin',...(path==='/checkout.html'?{'Cache-Control':'no-store','Content-Security-Policy':"default-src 'self'; script-src 'self' https://analytics.tiktok.com https://anlytics-ipv6.tiktokw.us; style-src 'self'; img-src 'self' data: https://analytics.tiktok.com https://anlytics-ipv6.tiktokw.us https://analytics.pangle-ads.com; connect-src 'self' https://analytics.tiktok.com https://anlytics-ipv6.tiktokw.us https://analytics.pangle-ads.com; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"}: {})});
   res.end(req.method==='HEAD'?undefined:bytes);
  } catch(e) {
   if(e.code==='ENOENT') return send(res,404,{error:'Ficheiro não encontrado.'});
@@ -117,4 +117,5 @@ const app = http.createServer(async(req,res)=>{
  }
 });
 app.listen(port,'0.0.0.0',()=>console.log('Aplicação disponível na porta '+port+'; pagamentos '+(enabled?'REAIS ativados':'desativados')));
+
 

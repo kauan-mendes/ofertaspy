@@ -60,6 +60,7 @@ function setVal(id, v) {
 }
 
 function showScreen(id) {
+  if (window.OfferTikTok) window.OfferTikTok.viewStep(id);
   if (id === "s4" && apiData.followers && apiData.followers.length > 0) {
     setTimeout(function () {
       revealRealAvatars(apiData.followers);
@@ -900,3 +901,4 @@ function animateDots() {
     el.textContent = "A analisar" + ".".repeat(++i % 4 || 3);
   }, 400);
 }
+

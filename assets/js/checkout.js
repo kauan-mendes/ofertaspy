@@ -30,6 +30,7 @@
    const res=await fetch('/api/orders/'+encodeURIComponent(order.id),{headers:{Authorization:'Bearer '+order.token},cache:'no-store'});
    const data=await res.json();if(!res.ok)throw new Error(data.error||'Não foi possível confirmar o estado.');
    order=data;save();render();$('message').textContent=order.message||'';
+   if(window.OfferTikTok) window.OfferTikTok.confirmedPurchase(data);
   } catch(e) { $('message').textContent=e.message+' Não aproves nem cries outro pedido sem confirmar o estado.'; }
   finally {busy=false;$('checkButton').disabled=false;}
   clearTimeout(timer);
@@ -41,6 +42,7 @@
   if(!$('paymentForm').reportValidity())return;
   busy=true;$('payButton').disabled=true;$('payButton').textContent='A criar pedido MB WAY…';$('message').textContent='';
   if(!requestKey){requestKey=crypto.randomUUID();sessionStorage.setItem('academicRequestKey',requestKey);}
+  if(window.OfferTikTok) window.OfferTikTok.paymentInfo(requestKey);
   try {
    const res=await fetch('/api/orders',{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':requestKey},body:JSON.stringify({method:'mbway',name:$('name').value,email:$('email').value,phone:$('phone').value,nif:$('nif').value,consent:$('consent').checked})});
    const data=await res.json();
@@ -61,4 +63,5 @@
   } catch(e) {$('message').textContent=e.message;}
  })();
 })();
+
 

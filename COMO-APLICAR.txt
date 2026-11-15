@@ -1,14 +1,14 @@
-Correção MB WAY 1.0.2
+TikTok Pixel DBSI5UJC77U7CBT61SDG — versão 1.0.3
 
-1. Extraia este ZIP e substitua os ficheiros no repositório ofertaspy mantendo as pastas. Não envie o ZIP como um único ficheiro.
-2. Faça commit e aguarde o deploy no Render.
-3. Confirme /api/health: version deve ser 1.0.2.
-4. Na página já aberta do pedido, atualize e clique em Verificar pagamento. A cobrança existente é reutilizada. Não crie outra.
+1. Extraia o ZIP e substitua os ficheiros do repositório kauan-mendes/ofertaspy, mantendo as pastas.
+2. Faça commit na branch conectada ao Render e aguarde o deploy. Não envie somente este ZIP como ficheiro do repositório.
+3. Confirme /api/health com version 1.0.3.
+4. Verifique os eventos em TikTok Events Manager / Test Events ou TikTok Pixel Helper.
 
-Causa observada: GET Eagle devolve id/status/amount/currency/endToEndId, amount=805 EUR e status=processing, sem vat. A versão anterior rejeitava o retorno por não incluir o objeto vat. A correção confere a referência, a moeda e os 805 cêntimos de base enviados. Quando vat existe, exige base=805 e total=990. O total esperado de 9,90 EUR depende do IVA automático documentado pela Eagle: confira-o na aplicação MB WAY antes de aprovar.
+Incluídos: PageView, ViewContent (incluindo passos do funil), InitiateCheckout, Lead, AddPaymentInfo e Purchase. Purchase apenas após resposta atual da API indicando pedido pago e valor correto, com deduplicação por pedido. Pendência MB WAY não é compra.
 
-A atualização não aprova manualmente: apenas status=completed obtido na consulta autenticada ao prestador confirma pagamento. processing/pending continuam pendentes. Valores ou referências diferentes continuam bloqueados.
+Não é necessário alterar o banco ou as variáveis do Render para o pixel do navegador. Tokens de pedidos e dados do formulário não são enviados como parâmetros do pixel.
 
-A permissão service_role da tabela mbway_orders já foi restaurada no Supabase. Não precisa executar o SQL novamente. O ficheiro database/diagnostics.sql inclui grants após a alteração para evitar a perda de permissões em novas instalações.
+Sem a página aberta, o pixel do navegador pode não enviar uma compra que só seja confirmada depois. Envio direto pelo servidor exige complemento com TikTok Events API e Access Token; essa parte não está ativa. Não é possível garantir 100% de entrega somente com o pixel.
 
-Validação: 11 testes unitários e testes de integração com retorno simulado tanto com IVA quanto sem o campo vat. Nenhuma cobrança nova criada pelo assistente.
+19 testes locais passaram, sem gerar cobranças nem eventos fictícios no TikTok. A receção real no Events Manager ainda precisa ser validada após a publicação.

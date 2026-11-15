@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="./assets/css/fonts.css" />
     <link rel="stylesheet" href="./assets/css/styles.css" />
 
+    <!-- TikTok: base e eventos comuns a todas as páginas -->
+    <script src="/assets/js/tiktok-pixel.js" defer></script>
+
     <!-- Utmify -->
     <script
       src="https://cdn.utmify.com.br/scripts/utms/latest.js"
@@ -1856,6 +1859,7 @@
         popup.style.display = 'flex';
         // Fire pixel event 
         if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout');
+        if (window.OfferTikTok) window.OfferTikTok.beginCheckout();
         // Focus name field
         setTimeout(() => document.getElementById('popupName').focus(), 100);
       }
@@ -1890,6 +1894,7 @@
 
         // Dados mantidos apenas neste separador; nunca modificar o e-mail do pagador.
         sessionStorage.setItem('academicCustomer', JSON.stringify({name, email}));
+        if (window.OfferTikTok) window.OfferTikTok.lead();
         window.location.href = './checkout.html';
       }
 
@@ -2282,3 +2287,4 @@
 
   </body>
 </html>
+
