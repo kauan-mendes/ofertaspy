@@ -6,8 +6,9 @@ import { randomUUID, randomBytes } from 'node:crypto';
 import { createStore } from './store.js';
 import { verifySignature, validateCustomer, mbwayPayload, matchesPayment, TOTAL_CENTS } from './payments.js';
 import { summarizeTransaction, paymentIssue, ISSUE_MESSAGES } from './provider-response.js';
+import { originConfig } from './origins.js';
 const root = fileURLToPath(new URL('../', import.meta.url));
-const origin = (process.env.PUBLIC_APP_URL || '').replace(/\/$/, '');
+const { apiOrigin: origin, allowedOrigins } = originConfig();
 const enabled = process.env.PAYMENTS_ENABLED === 'true';
 const port = Number(process.env.PORT || 3000);
 if (enabled && (!/^https:\/\/[^/?#]+$/.test(origin) || ['EAGLE_CLIENT_ID','EAGLE_PUBLIC_KEY','EAGLE_SECRET_KEY','SUPABASE_URL','SUPABASE_SERVICE_ROLE_KEY'].some(k => !process.env[k]))) throw new Error('Configura PUBLIC_APP_URL (HTTPS) e as credenciais Eagle e Supabase antes de ativar pagamentos.');
@@ -46,7 +47,7 @@ async function reconcile(o) {
 const app = http.createServer(async(req,res)=>{
  try {
   const url=new URL(req.url,'http://localhost');
-  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase',version:'1.0.3'});
+  if(url.pathname==='/api/health' && req.method==='GET') return send(res,200,{ok:true,storage:'supabase',version:'1.0.4'});
   if(url.pathname==='/api/config' && req.method==='GET') return send(res,200,{enabled,amount:990,currency:'EUR',mbwayBase:805,mbwayVat:185});
   if(url.pathname==='/api/eagle/webhook' && req.method==='POST') {
    if(!enabled) return send(res,503,{error:'Pagamentos desativados.'});
@@ -66,7 +67,7 @@ const app = http.createServer(async(req,res)=>{
   }
   if(url.pathname==='/api/orders' && req.method==='POST') {
    if(!enabled) return send(res,503,{error:'Pagamentos ainda não ativados no servidor.'});
-   if(req.headers.origin!==origin || !String(req.headers['content-type']||'').startsWith('application/json')) return send(res,403,{error:'Origem do pedido inválida.'});
+   if(!allowedOrigins.has(req.headers.origin) || !String(req.headers['content-type']||'').startsWith('application/json')) return send(res,403,{error:'Origem do pedido inválida.'});
    const body=JSON.parse(await rawBody(req));
    let customer; try { customer=validateCustomer(body); } catch(e) {return send(res,400,{error:e.message});}
    const key=String(req.headers['idempotency-key']||'');
@@ -117,5 +118,6 @@ const app = http.createServer(async(req,res)=>{
  }
 });
 app.listen(port,'0.0.0.0',()=>console.log('Aplicação disponível na porta '+port+'; pagamentos '+(enabled?'REAIS ativados':'desativados')));
+
 
 
